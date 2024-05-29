@@ -1,9 +1,7 @@
 @extends('layouts.app')
   <style>
-        .alternatif-col {
-            width: 25%;
-        }
-    </style>
+  .alternatif-col {width: 25%;}
+  </style>
 @section('content')
 
  
@@ -12,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4>Pembobotan Kriteria</h4>
+                <h4><b>Pembobotan Kriteria</b></h4>
                 <table class="table table-bordered">
                     <thead>
                         <tr class="table-warning">
@@ -45,13 +43,12 @@
         </div>
    </div>
 
-
-   {{-- ----------DATASET AC--------- --}} 
-   <div class="container mt-5">
+    {{-- ----------DATASET AC--------- --}} 
+    <div class="container mt-5">
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4>Dataset Alternatif AC</h4>
+                <h4><b>Dataset Alternatif AC</b></h4>
                 <table class="table table-bordered">
                     <thead>
                          <tr class="table-warning">
@@ -93,12 +90,12 @@
         </div>
    </div>
 
-   {{-- ----------STEP 1--------- --}}
-   <div class="container mt-5">
+    {{-- ----------STEP 1--------- --}}
+    <div class="container mt-5">
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4>1. Konversi Data & Normalisasi Euclidean</h4>
+                <h4><b>1. Matrix Keputusan X</b></h4>
                 <table class="table table-bordered">
                     <thead>
                        <tr class="table-warning">
@@ -140,12 +137,12 @@
         </div>
    </div>
 
-   {{-- ----------STEP 2--------- --}}
-   <div class="container mt-5">
+    {{-- ----------STEP 2--------- --}}
+    <div class="container mt-5">
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4>2. Normalized Values</h4>
+                <h4><b>2. Matrix Keputusan Ternomolasasi (R)</b></h4>
                 <table class="table table-bordered">
                     <thead>
                          <tr class="table-warning">
@@ -178,12 +175,12 @@
         </div>
    </div>
 
-      {{-- ----------STEP 3--------- --}}
-   <div class="container mt-5">
+    {{-- ----------STEP 3--------- --}}
+    <div class="container mt-5">
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4>3. Weighted Normalized Values</h4>
+                <h4><b>3. Matriks Keputusan Ternomalisasi</b></h4>
                 <table class="table table-bordered">
                     <thead>
                          <tr class="table-warning">
@@ -216,6 +213,136 @@
         </div>
    </div>
 
+    {{-- ----------STEP 4 (A+ A-) --------- --}}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <br>
+                <h4><b>4. Solusi Ideal Positif</b></h4>
+                <br>
+                <h5><b>Nilai A+</b></h5>
+                <table class="table table-bordered">
+                    <thead>
+                         <tr class="table-warning">
+                            <th>y1+</th>
+                            <th>y2+</th>
+                            <th>y3+</th>
+                            <th>y4+</th>
+                            <th>y5+</th>
+                            <th>y6+</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                             <td>{{ $aPlus['c1'] }}</td>
+                             <td>{{ $aPlus['c2'] }}</td>
+                             <td>{{ $aPlus['c3'] }}</td>
+                             <td>{{ $aPlus['c4'] }}</td>
+                             <td>{{ $aPlus['c5'] }}</td>
+                             <td>{{ $aPlus['c6'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <h5><b>Nilai A-</b></h5>
+                <table class="table table-bordered">
+                    <thead>
+                         <tr class="table-warning">
+                            <th>y1-</th>
+                            <th>y2-</th>
+                            <th>y3-</th>
+                            <th>y4-</th>
+                            <th>y5-</th>
+                            <th>y6-</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $aMinus['c1'] }}</td>
+                            <td>{{ $aMinus['c2'] }}</td>
+                            <td>{{ $aMinus['c3'] }}</td>
+                            <td>{{ $aMinus['c4'] }}</td>
+                            <td>{{ $aMinus['c5'] }}</td>
+                            <td>{{ $aMinus['c6'] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-sm btn-warning">Lihat Rumus</button>
+                <hr>
+            </div>
+        </div>
+   </div>
+
+   {{-- ----------STEP 5 (D+ D-) --------- --}}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <br>
+                <h4><b>5. jarak Antara Nilai Terbobot Setiap Alternatif Solusi Postif & Negatif</b></h4>
+                <br>
+                <h5><b>Jarak D+ dan D-</b></h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Alternatif</th>
+                            <th>D+</th>
+                            <th>D-</th>
+                        </tr>
+                    </thead>
+                   @php
+                        $no = 1;
+                        $no1 = 1;
+                    @endphp
+                        <tbody>
+                            @foreach ($distances as $index => $distance)
+                            <tr>
+                                <td>{{ $weightedValues[$index]['alternatif'] }}</td>
+                                <td>(D{{ $no++ }}+) <b>{{ number_format($distance['dPlus'], 4) }}</b></td>
+                                <td>(D{{ $no1++ }}-) <b>{{ number_format($distance['dMinus'], 4) }}</b></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                </table>
+                <button class="btn btn-sm btn-warning">Lihat Rumus</button>
+                <hr>
+            </div>
+        </div>
+   </div>
+
+      {{-- ----------STEP 6 (V) --------- --}}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <br>
+                <h4><b>6. Menghitung Kedekatan Relatif Terhadap Solusi Ideal</b></h4>
+                <br>
+                <h5><b>Relatif Solusi Ideal</b></h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Alternatif</th>
+                            <th>V</th>
+                        </tr>
+                    </thead>
+                   @php
+                        $no = 1;
+                    @endphp
+
+                        <tbody>
+                            @foreach ($distances as $index => $distance)
+                            <tr>
+                                <td>{{ $weightedValues[$index]['alternatif'] }}</td>
+                                <td>(V{{ $no++ }}) <b>{{ number_format($vValues[$index], 4) }}</b></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+
+                </table>
+                <button class="btn btn-sm btn-warning">Lihat Rumus</button>
+                <hr>
+            </div>
+        </div>
+   </div>
    
 
 
