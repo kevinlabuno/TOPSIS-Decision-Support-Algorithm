@@ -6,45 +6,157 @@ use Illuminate\Http\Request;
 use App\Models\Bobot;
 use App\Models\Konver;
 use App\Models\Data;
+use App\Models\Real;
 
 class PerhitunganController extends Controller
 {
+    
+    public function pemilihan(){
+        $airConditioners = Real::all();
+        return view('pilihac', compact('airConditioners'));
+    }
+
+    public function update(Request $request)
+     {
+        $selectedIds = $request->input('selected_ids');
+        $airConditioners = Real::whereIn('id', $selectedIds)->get();
+        
+        Data::truncate();
+        Konver::truncate();
+
+
+        foreach ($airConditioners as $ac) {
+            Data::updateOrCreate(
+                ['alternatif' => $ac->alternatif],
+                ['c1' => $ac->c1, 'c2' => $ac->c2, 'c3' => $ac->c3, 'c4' => $ac->c4, 'c5' => $ac->c5, 'c6' => $ac->c6, 'v' => $ac->v]
+            );
+
+            Konver::updateOrCreate(
+                ['alternatif' => $ac->alternatif],
+                [
+                    'c1' => $this->convertC1($ac->c1),
+                    'c2' => $this->convertC2($ac->c2),
+                    'c3' => $this->convertC3($ac->c3),
+                    'c4' => $this->convertC4($ac->c4),
+                    'c5' => $this->convertC5($ac->c5),
+                    'c6' => $this->convertC6($ac->c6),
+                    'v' => $ac->v
+                ]
+            );
+        }
+
+        return redirect()->route('priview')->with('success', 'Data Alternatif Telah Disimpan');
+    }
+
+    private function convertC1($value)
+     {
+        if ($value >= 2000000 && $value <= 2999999) return 1;
+        if ($value >= 3000000 && $value <= 3999999) return 2;
+        if ($value >= 4000000 && $value <= 4999999) return 3;
+        if ($value >= 5000000 && $value <= 6000000) return 4;
+        if ($value > 6000000) return 5;
+        return null;
+    }
+
+    private function convertC2($value)
+      {
+        if ($value == 0.5) return 1;
+        if ($value == 1) return 2;
+        if ($value == 1.5) return 3;
+        if ($value == 2) return 4;
+        if ($value == 2.5) return 5;
+        return null;
+    }
+
+    private function convertC3($value)
+     {
+        if ($value >= 250 && $value <= 299) return 1;
+        if ($value >= 300 && $value <= 499) return 2;
+        if ($value >= 500 && $value <= 699) return 3;
+        if ($value >= 700 && $value <= 900) return 4;
+        if ($value > 900) return 5;
+        return null;
+    }
+
+    private function convertC4($value)
+     {
+        if ($value >= 8 && $value <= 10) return 1;
+        if ($value >= 11 && $value <= 15) return 2;
+        if ($value >= 16 && $value <= 22) return 3;
+        if ($value >= 23 && $value <= 30) return 4;
+        if ($value > 30) return 5;
+        return null;
+    }
+
+    private function convertC5($value)
+     {
+        if ($value < 0) return 1;
+        if ($value >= 1 && $value <= 2) return 2;
+        if ($value >= 3 && $value <= 4) return 3;
+        if ($value >= 5 && $value <= 6) return 4;
+        if ($value > 6) return 5;
+        return null;
+    }
+
+    private function convertC6($value)
+     {   
+        if ($value >= 18 && $value <= 24) return 1;
+        if ($value >= 25 && $value <= 29) return 2;
+        if ($value >= 30 && $value <= 34) return 3;
+        if ($value >= 35 && $value <= 37) return 4;
+        if ($value > 37) return 5;
+        return null;
+    }
+    
+    public function priview(){
+
+        $data = Data::all();
+        $konversi = Konver::all();
+        return view('priview', compact('data','konversi'));
+    }
+    
     public function bobot(){
         return view('bobot');
     }
 
     public function bobot_post(Request $request){
-         $request->validate([
-            'harga' => 'required|numeric',
-            'tenaga' => 'required|numeric',
-            'daya' => 'required|numeric',
-            'kapasitas' => 'required|numeric',
-            'garansi' => 'required|numeric',
-            'berat' => 'required|numeric'
+    // Truncate tabel Bobot
+    Bobot::truncate();
+
+    // Validasi request
+    $request->validate([
+        'harga' => 'required|numeric',
+        'tenaga' => 'required|numeric',
+        'daya' => 'required|numeric',
+        'kapasitas' => 'required|numeric',
+        'garansi' => 'required|numeric',
+        'berat' => 'required|numeric'
+    ]);
+
+    // Simpan bobot baru
+    $criteria1 = ['harga', 'daya', 'berat'];
+    foreach ($criteria1 as $kriteria) {
+        Bobot::create([
+            'kriteria' => $kriteria,
+            'tipe' => 'cost',
+            'bobot' => $request->$kriteria,
+            'w' => $request->$kriteria / 100
         ]);
-
-        $criteria1 = ['harga', 'daya', 'berat'];
-        foreach ($criteria1 as $kriteria) {
-            Bobot::create([
-                'kriteria' => $kriteria,
-                'tipe' => 'cost',
-                'bobot' => $request->$kriteria,
-                'w' => $request->$kriteria / 100
-            ]);
-        }
-
-        $criteria = ['tenaga', 'kapasitas', 'garansi'];
-        foreach ($criteria as $kriteria) {
-            Bobot::create([
-                'kriteria' => $kriteria,
-                'tipe' => 'benefit',
-                'bobot' => $request->$kriteria,
-                'w' => $request->$kriteria / 100
-            ]);
-        }
-        return redirect()->back()->with('success','Bobot Kriteria Berhasil Disimpan');
-        
     }
+
+    $criteria = ['tenaga', 'kapasitas', 'garansi'];
+    foreach ($criteria as $kriteria) {
+        Bobot::create([
+            'kriteria' => $kriteria,
+            'tipe' => 'benefit',
+            'bobot' => $request->$kriteria,
+            'w' => $request->$kriteria / 100
+        ]);
+    }
+
+    return redirect()->route('perhitungan')->with('success','Bobot Kriteria Berhasil Disimpan');
+}
+
 
     public function index()
      {

@@ -4,6 +4,11 @@
   </style>
 @section('content')
 
+@if (session('success'))
+<hr>
+    <div class="alert alert-primary">{{session('success')}}</div>
+@endif
+
  
     {{-- ----------PEMBOBOTAN--------- --}}
     <div class="container mt-5">

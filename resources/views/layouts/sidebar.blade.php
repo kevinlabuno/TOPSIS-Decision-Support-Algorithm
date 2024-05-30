@@ -18,7 +18,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('bobot')}}">
+        <a class="nav-link collapsed" href="{{route('pilihac')}}">
           <i class="bi bi-flower2"></i>
           <span>Pemilihan AC</span>
         </a>

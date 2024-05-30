@@ -3,10 +3,10 @@
 @section('content')
 
      <div class="pagetitle">
-      <h1>Pemilihan AC & Pembobotan</h1>
+      <h1>Pembobotan Kriteria</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">pembobotan kriteria</a></li>
+          <li class="breadcrumb-item"><a href="">Pembobotan kriteria alternatif</a></li>
         </ol>
       </nav>
     </div>
