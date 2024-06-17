@@ -16,6 +16,7 @@ class CreateRealTable extends Migration
         Schema::create('real', function (Blueprint $table) {
             $table->id();
             $table->string('alternatif');
+            $table->string('merek');
             $table->string('c1');
             $table->string('c2');
             $table->string('c3');
