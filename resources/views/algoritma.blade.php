@@ -33,14 +33,14 @@
                 </div>
 
                 <div class="post-item clearfix">
-                  <h4><a href="#">2. Normalisasi Tertimbang</a></h4>
+                  <h4><a href="#">2. Normalisasi Terbobot</a></h4>
                   <img src="img/step2.png" alt="" width="270px" height="100px">
                   <br>
                   <p>Di mana 𝑣𝑖𝑗vij adalah nilai ternormalisasi tertimbang, dan 𝑤𝑗wj adalah bobot kriteria.</p>
                 </div>
 
                 <div class="post-item clearfix">
-                  <h4><a href="#">3. Jarak Euclidean</a></h4>
+                  <h4><a href="#">3. jarak solusi ideal positif dan negatif</a></h4>
                   <img src="img/step3.png" alt="" width="270px" height="170px">
                   <br>
                   <p>Di mana 𝐷𝑖+ Di+ adalah jarak ke solusi ideal positif, dan 𝐷𝑖 − Di−adalah jarak ke solusi ideal negatif.</p>

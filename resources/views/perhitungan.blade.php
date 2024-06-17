@@ -147,7 +147,7 @@
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4><b>2. Matrix Keputusan Ternomolasasi (R)</b></h4>
+                <h4><b>2. Matrix Keputusan Ternormalasasi (R)</b></h4>
                 <table class="table table-bordered">
                     <thead>
                          <tr class="table-warning">
@@ -185,7 +185,7 @@
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4><b>3. Matriks Keputusan Ternomalisasi</b></h4>
+                <h4><b>3. matriks keputusan ternormalisasi (Y)</b></h4>
                 <table class="table table-bordered">
                     <thead>
                          <tr class="table-warning">
@@ -223,7 +223,7 @@
         <div class="card">
             <div class="card-body">
                 <br>
-                <h4><b>4. Solusi Ideal Positif</b></h4>
+                <h4><b>4. Solusi Ideal</b></h4>
                 <br>
                 <h5><b>Nilai A+</b></h5>
                 <table class="table table-bordered">

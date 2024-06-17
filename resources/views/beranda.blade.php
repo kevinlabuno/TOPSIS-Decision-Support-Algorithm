@@ -14,7 +14,11 @@
     <div class="col-lg-12">
 
     <div class="card">
-            <div class="card-header">Sistem Pemeliharan Air Conditioner Menggunakan Metode Topsis</div>
+            <div class="card-header">Sistem pendukung keputusan pemilihan air conditioner Menggunakan Metode Topsis</div>
+            
+            <div class="image-container" style="text-align: center; margin-top: 20px;">
+                    <img src="assets/img/ac.jpg" alt="Air Conditioner" style="max-width: 80%; height: auto; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                </div>
             <div class="card-body">
               <h5 class="card-title">Deskripsi</h5>
               Pemilihan air conditioner yang tepat sangat penting untuk memastikan 

@@ -17,6 +17,9 @@
         <div class="card-body">
             <br>
             <h4><b>Pilih alternatif untuk melanjutkan ke perhitungan</b></h4>
+            <div class="alert alert-danger">
+                <p>Catatan: Minimal Pilih 3 Alternatif Air Conditioner</p>
+            </div>
             <form id="acForm" action="{{ route('pilihac.update') }}" method="POST">
                 @csrf
                 <table class="table table-bordered">

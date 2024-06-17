@@ -119,7 +119,8 @@ class PerhitunganController extends Controller
         return view('bobot');
     }
 
-    public function bobot_post(Request $request){
+    public function bobot_post(Request $request)
+{
     // Truncate tabel Bobot
     Bobot::truncate();
 
@@ -133,28 +134,38 @@ class PerhitunganController extends Controller
         'berat' => 'required|numeric'
     ]);
 
-    // Simpan bobot baru
-    $criteria1 = ['harga', 'daya', 'berat'];
-    foreach ($criteria1 as $kriteria) {
+    // Hitung total bobot
+    $totalBobot = $request->input('harga') +
+                  $request->input('tenaga') +
+                  $request->input('daya') +
+                  $request->input('kapasitas') +
+                  $request->input('garansi') +
+                  $request->input('berat');
+
+    // Validasi total bobot harus 100
+    if ($totalBobot != 100) {
+        return redirect()->back()->withErrors(['total_bobot' => 'Total bobot semua kriteria harus 100.']);
+    }
+
+    $criteria = [
+        ['kriteria' => 'harga', 'tipe' => 'cost'],
+        ['kriteria' => 'tenaga', 'tipe' => 'benefit'],
+        ['kriteria' => 'daya', 'tipe' => 'cost'],
+        ['kriteria' => 'kapasitas', 'tipe' => 'benefit'],
+        ['kriteria' => 'garansi', 'tipe' => 'benefit'],
+        ['kriteria' => 'berat', 'tipe' => 'cost']
+    ];
+
+    foreach ($criteria as $item) {
         Bobot::create([
-            'kriteria' => $kriteria,
-            'tipe' => 'cost',
-            'bobot' => $request->$kriteria,
-            'w' => $request->$kriteria / 100
+            'kriteria' => $item['kriteria'],
+            'tipe' => $item['tipe'],
+            'bobot' => $request->input($item['kriteria']),
+            'w' => $request->input($item['kriteria']) / 100
         ]);
     }
 
-    $criteria = ['tenaga', 'kapasitas', 'garansi'];
-    foreach ($criteria as $kriteria) {
-        Bobot::create([
-            'kriteria' => $kriteria,
-            'tipe' => 'benefit',
-            'bobot' => $request->$kriteria,
-            'w' => $request->$kriteria / 100
-        ]);
-    }
-
-    return redirect()->route('perhitungan')->with('success','Bobot Kriteria Berhasil Disimpan');
+    return redirect()->route('perhitungan')->with('success', 'Bobot Kriteria Berhasil Disimpan');
 }
 
 
